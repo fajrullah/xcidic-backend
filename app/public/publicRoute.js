@@ -3,10 +3,10 @@
 /**
  * Public Route
  * No Authentication
- * @author Fajrul
+* @author Fajrul
  */
-// const { isEntityFalse } = require('../../core')
-// const { formController, formMiddleware } = require('./form')
+// const { isEntityFalse, clientError400 } = require('../../core')
+// const { loginHandler, loginMiddleware } = require('./login')
 module.exports = (app) => {
   /**
    * Home Page
@@ -16,10 +16,7 @@ module.exports = (app) => {
   }))
 
   // /**
-  //  * form Routes
+  //  * Login Routes
   //  */
-
-  // app.post('/form', [formMiddleware.formCheck, isEntityFalse], formController.create)
-
-  // app.post('/login', [formMiddleware.loginCheck, isEntityFalse], formController.login)
+  // app.post('/login', [loginMiddleware.loginCheck, isEntityFalse], loginHandler.login, clientError400)
 }

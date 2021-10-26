@@ -1,5 +1,4 @@
 'use strict'
-
 const dotenv = require('dotenv')
 dotenv.config()
 module.exports = {
@@ -8,5 +7,10 @@ module.exports = {
   issuer: process.env.ISSUER,
   subject: process.env.SUBJECT,
   env: process.env.NODE_ENV,
-  URI: process.env.URI
+  database: process.env.DB_DATABASE,
+  dialect: process.env.DB_DIALECT,
+  password: process.env.DB_PASSWORD,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  dbport: process.env.DB_PORT
 }

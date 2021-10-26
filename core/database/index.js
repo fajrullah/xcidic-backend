@@ -1,29 +1,42 @@
-const Mongoose = require('mongoose')
-Mongoose.set('debug', true)
-Mongoose.set('useFindAndModify', false)
-const { URI } = require('../config')
+'use strict'
 /**
- * Class DB From ANASTASIA
+ * Connection Pool
  */
-class Database {
-  constructor () {
-    this._connect()
+const Sequelize = require('sequelize')
+const config = require('../config')
+const check = require('../config/check')
+const { initModels } = require('./models/init-models')
+const sequelize = new Sequelize(config.database, config.user, config.password, {
+  host: config.host,
+  dialect: config.dialect,
+  port: config.dbport,
+  dialectOptions: {
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
   }
+})
 
-  _connect () {
-    Mongoose.connect(URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true
-    })
-      .then((res) => {
-        console.log('Database connection successful')
-      })
-      .catch(_err => {
-        console.log(_err)
-        console.error('Database connection error')
-      })
-  }
-}
+sequelize.authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.')
+    check()
+  })
+  .catch(err => console.error('Unable to connect to the database:', err))
 
-module.exports = new Database()
+/**
+ * for creating the table from model side
+
+ sequelize.sync()
+.then(() => {
+ console.log('#### Generate The Table Completed ####')
+check()
+})
+.catch(_err => console.log(_err, '#### Something Wrong ####'))
+*/
+
+initModels(sequelize)
+module.exports = { sequelize }

@@ -5,9 +5,8 @@ const cors = require('cors')
 const helmet = require('helmet')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
-const { publicRoute, protectedRoute, isEntityFalse } = require('./core')
+const { publicRoute, protectedRoute, isEntityFalse, clientErrorHandler } = require('./core')
 const {
-  clientErrorHandler,
   schemaCheck,
   checkToken
 } = require('./core')
@@ -41,7 +40,6 @@ app.use(bodyParser.json())
  */
 app.use(isEntityFalse)
 
-
 /**
  * Using swagger for documentation API
  */
@@ -56,10 +54,11 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
  * publicRoute(PublicRoutes)
  */
 publicRoute(app)
-app.use('/api', [schemaCheck
-  /** , apiLimiter */], ProtectedRoutes)
-ProtectedRoutes.use(checkToken)
-protectedRoute(ProtectedRoutes)
+// app.use('/api', [schemaCheck
+//   /** , apiLimiter */], ProtectedRoutes)
+
+// ProtectedRoutes.use(checkToken)
+// protectedRoute(ProtectedRoutes)
 app.use(clientErrorHandler)
 
 module.exports = app
