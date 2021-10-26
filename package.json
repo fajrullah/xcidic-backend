@@ -1,0 +1,43 @@
+{
+  "name": "xcidic-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fajrullah/xcidic-backend/issues"
+  },
+  "homepage": "https://github.com/fajrullah/xcidic-backend#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.1.0",
+    "babel-node": "0.0.1-security",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^8.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "nodemon": "^2.0.14",
+    "standard": "^16.0.4"
+  },
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.13.0",
+    "helmet": "^4.6.0",
+    "mariadb": "^2.5.5",
+    "mysql2": "^2.3.2",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.8.0",
+    "swagger-ui-express": "^4.1.6"
+  }
+}

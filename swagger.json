@@ -1,0 +1,555 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "ORANGE Application API",
+      "description": "ORANGE Application API",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:5000",
+    "basePath": "/",
+    "schemes": [
+      "http"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/api/user": {
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "description": "create a user",
+          "parameters": [
+            {
+              "name": "user id",
+              "in": "body",
+              "description": "create a user",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "about": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "last_login": {
+                  "type": "date"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "level": {
+                  "type": "string"
+                },
+                "scopes": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "create new user",
+          "responses": {
+            "201": {
+              "description": "success"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "user"
+          ],
+          "description": "get all",
+          "parameters": [
+            {
+              "name": "user id",
+              "in": "body",
+              "description": "get all"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "get all users",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "user"
+          ],
+          "description": "update role",
+          "parameters": [
+            {
+              "name": "user id",
+              "in": "body",
+              "description": "update role",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                },
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "about": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "last_login": {
+                  "type": "date"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "level": {
+                  "type": "string"
+                },
+                "scopes": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "update user",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "user"
+          ],
+          "description": "delete user",
+          "parameters": [
+            {
+              "name": "user id",
+              "in": "body",
+              "description": "delete user",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "delete user",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/api/user/search": {
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "description": "search a user",
+          "parameters": [
+            {
+              "name": "user id",
+              "in": "body",
+              "description": "search a user",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "search user",
+          "responses": {
+            "201": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/api/user/specific": {
+        "post": {
+          "tags": [
+            "user"
+          ],
+          "description": "get a user",
+          "parameters": [
+            {
+              "name": "user id",
+              "in": "body",
+              "description": "get a user",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "get specific user",
+          "responses": {
+            "201": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/api/user/changepassword": {
+        "put": {
+          "tags": [
+            "user"
+          ],
+          "description": "change password",
+          "parameters": [
+            {
+              "name": "user id",
+              "in": "body",
+              "description": "change password",
+              "properties": {
+                "userid": {
+                  "type": "string"
+                },
+                "oldPassword": {
+                  "type": "string"
+                },
+                "newPassword": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "user change password",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/register": {
+        "post": {
+          "tags": [
+            "register"
+          ],
+          "description": "Create new user in system",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "User that we want to create",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "sign up",
+          "responses": {
+            "201": {
+              "description": "New user is created",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        }
+      },
+      "/api/role/search": {
+        "post": {
+          "tags": [
+            "role"
+          ],
+          "description": "search a role",
+          "parameters": [
+            {
+              "name": "role id",
+              "in": "body",
+              "description": "search a role",
+              "properties": {
+                "field": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "search role",
+          "responses": {
+            "201": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/api/role/specific": {
+        "post": {
+          "tags": [
+            "role"
+          ],
+          "description": "get a role",
+          "parameters": [
+            {
+              "name": "role id",
+              "in": "body",
+              "description": "get a role",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "get specific role",
+          "responses": {
+            "201": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/api/role": {
+        "post": {
+          "tags": [
+            "role"
+          ],
+          "description": "create a role",
+          "parameters": [
+            {
+              "name": "role id",
+              "in": "body",
+              "description": "create a role",
+              "properties": {
+                "level": {
+                  "type": "string"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "create new role",
+          "responses": {
+            "201": {
+              "description": "success"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "role"
+          ],
+          "description": "get all",
+          "parameters": [
+            {
+              "name": "role id",
+              "in": "body",
+              "description": "get all"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "get all role",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        },
+        "put": {
+          "tags": [
+            "role"
+          ],
+          "description": "update role",
+          "parameters": [
+            {
+              "name": "role id",
+              "in": "body",
+              "description": "update role",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "update role",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "role"
+          ],
+          "description": "delete role",
+          "parameters": [
+            {
+              "name": "role id",
+              "in": "body",
+              "description": "delete role",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "delete role",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "login"
+          ],
+          "description": "login user",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "login user",
+              "properties": {
+                "password": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "login",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        }
+      },
+      "/auth/accesstoken": {
+        "post": {
+          "tags": [
+            "access_token"
+          ],
+          "description": "Access Token",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "Access Token",
+              "properties": {
+                "refresh_token": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "email"
+                },
+                "level": {
+                  "type": "email"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "get access token",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        }
+      }
+    }
+}
