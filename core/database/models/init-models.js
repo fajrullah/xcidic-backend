@@ -1,17 +1,10 @@
 const DataTypes = require('sequelize').DataTypes
-const _consumerProducts = require('./consumer_products')
-let _users = require('./users')
+const _branches = require('./branches')
 
 function initModels (sequelize) {
-  const consmerProducts = _consumerProducts(sequelize, DataTypes)
-
-  let users = _users(sequelize, DataTypes)
-
+  const branches = _branches(sequelize, DataTypes)
   return {
-
-    consmerProducts,
-
-    users
+    branches
   }
 }
 module.exports = initModels

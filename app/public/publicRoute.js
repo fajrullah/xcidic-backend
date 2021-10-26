@@ -3,20 +3,12 @@
 /**
  * Public Route
  * No Authentication
-* @author Fajrul
+ * @author Fajrul
  */
-// const { isEntityFalse, clientError400 } = require('../../core')
-// const { loginHandler, loginMiddleware } = require('./login')
-module.exports = (app) => {
-  /**
-   * Home Page
-   */
-  app.get('/', (req, res, next) => res.json({
-    status: 'It Works'
-  }))
 
-  // /**
-  //  * Login Routes
-  //  */
-  // app.post('/login', [loginMiddleware.loginCheck, isEntityFalse], loginHandler.login, clientError400)
+module.exports = (app) => {
+  app.get('/', (req, res, next) => res.json({
+    status: 'XCIDIC V1.0.0'
+  }))
+  require('./branch')(app)
 }

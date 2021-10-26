@@ -10,7 +10,7 @@
 // /**
 //  * Define requirement files here
 //  */
-// const { sequelize } = require('./database')
+const { sequelize } = require('./database')
 const { clientError400, clientErrorHandler, logErrors } = require('./error')
 const { isEntityFalse, checkToken } = require('./protected')
 const { fieldCheck, idCheck, schemaCheck } = require('./helper/middleware')
@@ -32,9 +32,9 @@ const {
  * Loader for Model
  * Define All Model Here
  */
-// const {
-//   admin_users: Admin,
-// } = sequelize.models
+const {
+  branches: Branches
+} = sequelize.models
 
 /**
  * @returns { Obj }
@@ -54,6 +54,7 @@ module.exports = {
   /**
    * export models
    */
+  Branches,
   // Admin,
   // // /**
   // //  * export function
@@ -81,7 +82,7 @@ module.exports = {
   // moved,
   generateToken,
   // getAccessToken,
-  callback: require('./helper/callback'),
+  response: require('./helper/response'),
   SequelizeCustomize: require('./helper/sequelizecustomize'),
   // fieldCheck,
   // idCheck,

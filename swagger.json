@@ -2,14 +2,14 @@
     "swagger": "2.0",
     "info": {
       "version": "1.0.0",
-      "title": "ORANGE Application API",
-      "description": "ORANGE Application API",
+      "title": "XCIDIC Application API",
+      "description": "XCIDIC Application API",
       "license": {
         "name": "MIT",
         "url": "https://opensource.org/licenses/MIT"
       }
     },
-    "host": "localhost:5000",
+    "host": "localhost:8812",
     "basePath": "/",
     "schemes": [
       "http"
@@ -21,49 +21,28 @@
       "application/json"
     ],
     "paths": {
-      "/api/user": {
+      "/branches": {
         "post": {
           "tags": [
-            "user"
+            "branches"
           ],
-          "description": "create a user",
+          "description": "create a branch",
           "parameters": [
             {
-              "name": "user id",
+              "name": "branch",
               "in": "body",
-              "description": "create a user",
+              "description": "create a branch",
               "properties": {
-                "userid": {
+                "name": {
                   "type": "string"
                 },
-                "firstName": {
+                "latitude": {
                   "type": "string"
                 },
-                "lastName": {
+                "longitude": {
                   "type": "string"
                 },
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "about": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "last_login": {
-                  "type": "date"
-                },
-                "status": {
-                  "type": "boolean"
-                },
-                "level": {
-                  "type": "string"
-                },
-                "scopes": {
+                "openingHours": {
                   "type": "string"
                 }
               }
@@ -72,7 +51,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "create new user",
+          "summary": "create new branch",
           "responses": {
             "201": {
               "description": "success"
@@ -81,20 +60,31 @@
         },
         "get": {
           "tags": [
-            "user"
+            "branches"
           ],
-          "description": "get all",
+          "description": "get branches",
           "parameters": [
             {
-              "name": "user id",
-              "in": "body",
-              "description": "get all"
+              "name": "id",
+              "in": "query"
+            },
+            {
+              "name": "latitude",
+              "in": "query"
+            },
+            {
+              "name": "longitude",
+              "in": "query"
+            },
+            {
+              "name": "openingHours",
+              "in": "query"
             }
           ],
           "produces": [
             "application/json"
           ],
-          "summary": "get all users",
+          "summary": "get all branches",
           "responses": {
             "200": {
               "description": "success"
@@ -103,46 +93,28 @@
         },
         "put": {
           "tags": [
-            "user"
+            "branches"
           ],
-          "description": "update role",
+          "description": "update branches",
           "parameters": [
             {
               "name": "user id",
               "in": "body",
-              "description": "update role",
+              "description": "update branches",
               "properties": {
-                "userid": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
                   "type": "string"
                 },
-                "firstName": {
+                "latitude": {
                   "type": "string"
                 },
-                "lastName": {
+                "longitude": {
                   "type": "string"
                 },
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "about": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "last_login": {
-                  "type": "date"
-                },
-                "status": {
-                  "type": "boolean"
-                },
-                "level": {
-                  "type": "string"
-                },
-                "scopes": {
+                "openingHours": {
                   "type": "string"
                 }
               }
@@ -151,7 +123,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "update user",
+          "summary": "update branch",
           "responses": {
             "200": {
               "description": "success"
@@ -160,17 +132,21 @@
         },
         "delete": {
           "tags": [
-            "user"
+            "branches"
           ],
-          "description": "delete user",
+          "description": "delete branch",
           "parameters": [
             {
-              "name": "user id",
+              "name": "branchid",
               "in": "body",
-              "description": "delete user",
+              "description": "delete branch",
               "properties": {
-                "userid": {
-                  "type": "string"
+                "id": {
+                  "type": "integer"
+                },
+                "isSafeDelete": {
+                  "type": "boolean",
+                  "default": true
                 }
               }
             }
@@ -178,7 +154,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "delete user",
+          "summary": "delete branch",
           "responses": {
             "200": {
               "description": "success"
