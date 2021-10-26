@@ -11,4 +11,5 @@ module.exports = (app) => {
     status: 'XCIDIC V1.0.0'
   }))
   require('./branch')(app)
+  require('./timeslots')(app)
 }

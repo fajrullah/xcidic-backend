@@ -10,6 +10,7 @@
 // /**
 //  * Define requirement files here
 //  */
+const Sequelize = require('sequelize')
 const { sequelize } = require('./database')
 const { clientError400, clientErrorHandler, logErrors } = require('./error')
 const { isEntityFalse, checkToken } = require('./protected')
@@ -33,9 +34,12 @@ const {
  * Define All Model Here
  */
 const {
+  timeslots: Timeslots,
+  demands: Demands,
+  reservations: Reservations,
   branches: Branches
 } = sequelize.models
-
+const Op = Sequelize.Op
 /**
  * @returns { Obj }
  */
@@ -54,12 +58,16 @@ module.exports = {
   /**
    * export models
    */
+  Reservations,
+  Demands,
   Branches,
+  Timeslots,
   // Admin,
   // // /**
   // //  * export function
   // //  */
-  // // Op,
+  Op,
+  Sequelize,
   // short,
   // upload,
   // bcrypt,

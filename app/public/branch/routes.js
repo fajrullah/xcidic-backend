@@ -9,13 +9,6 @@ const { isEntityFalse } = require('../../../core')
 const middleware = require('./middleware')
 const Controller = require('./controller')
 module.exports = (app) => {
-  /**
-   * Home Page
-   */
-  app.get('/info', (req, res, next) => res.json({
-    status: 'It Works'
-  }))
-
   app
     .route('/branches')
     .get(Controller.getBranches)

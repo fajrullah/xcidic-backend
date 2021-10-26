@@ -43,7 +43,8 @@
                   "type": "string"
                 },
                 "openingHours": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "00:00:00"
                 }
               }
             }
@@ -162,84 +163,41 @@
           }
         }
       },
-      "/api/user/search": {
+      "/timeslots": {
         "post": {
           "tags": [
-            "user"
+            "timeslots"
           ],
-          "description": "search a user",
+          "description": "create a timeslots",
           "parameters": [
             {
-              "name": "user id",
+              "name": "timeslots",
               "in": "body",
-              "description": "search a user",
+              "description": "create a timeslots",
               "properties": {
-                "userid": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "summary": "search user",
-          "responses": {
-            "201": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/api/user/specific": {
-        "post": {
-          "tags": [
-            "user"
-          ],
-          "description": "get a user",
-          "parameters": [
-            {
-              "name": "user id",
-              "in": "body",
-              "description": "get a user",
-              "properties": {
-                "userid": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "summary": "get specific user",
-          "responses": {
-            "201": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/api/user/changepassword": {
-        "put": {
-          "tags": [
-            "user"
-          ],
-          "description": "change password",
-          "parameters": [
-            {
-              "name": "user id",
-              "in": "body",
-              "description": "change password",
-              "properties": {
-                "userid": {
+                "branchID": {
+                  "type": "integer"
+                },
+                "mealPlanName": {
                   "type": "string"
                 },
-                "oldPassword": {
+                "capacity": {
+                  "type": "integer",
+                  "default": 15
+                },
+                "day": {
                   "type": "string"
                 },
-                "newPassword": {
-                  "type": "string"
+                "price": {
+                  "type": "integer"
+                },
+                "startTime": {
+                  "type": "string",
+                  "default": "00:00:00"
+                },
+                "endTime": {
+                  "type": "string",
+                  "default": "00:00:00"
                 }
               }
             }
@@ -247,133 +205,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "user change password",
-          "responses": {
-            "200": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/register": {
-        "post": {
-          "tags": [
-            "register"
-          ],
-          "description": "Create new user in system",
-          "parameters": [
-            {
-              "name": "user",
-              "in": "body",
-              "description": "User that we want to create",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "summary": "sign up",
-          "responses": {
-            "201": {
-              "description": "New user is created",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        }
-      },
-      "/api/role/search": {
-        "post": {
-          "tags": [
-            "role"
-          ],
-          "description": "search a role",
-          "parameters": [
-            {
-              "name": "role id",
-              "in": "body",
-              "description": "search a role",
-              "properties": {
-                "field": {
-                  "type": "string"
-                },
-                "value": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "summary": "search role",
-          "responses": {
-            "201": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/api/role/specific": {
-        "post": {
-          "tags": [
-            "role"
-          ],
-          "description": "get a role",
-          "parameters": [
-            {
-              "name": "role id",
-              "in": "body",
-              "description": "get a role",
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "summary": "get specific role",
-          "responses": {
-            "201": {
-              "description": "success"
-            }
-          }
-        }
-      },
-      "/api/role": {
-        "post": {
-          "tags": [
-            "role"
-          ],
-          "description": "create a role",
-          "parameters": [
-            {
-              "name": "role id",
-              "in": "body",
-              "description": "create a role",
-              "properties": {
-                "level": {
-                  "type": "string"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "action": {
-                  "type": "string"
-                }
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "summary": "create new role",
+          "summary": "create new timeslots",
           "responses": {
             "201": {
               "description": "success"
@@ -382,20 +214,44 @@
         },
         "get": {
           "tags": [
-            "role"
+            "timeslots"
           ],
-          "description": "get all",
+          "description": "get timeslots",
           "parameters": [
             {
-              "name": "role id",
-              "in": "body",
-              "description": "get all"
+              "name": "id",
+              "in": "query"
+            },
+            {
+              "name": "branchID",
+              "in": "query"
+            },
+            {
+              "name": "mealPlanName",
+              "in": "query"
+            },
+            {
+              "name": "capacity",
+              "in": "query"
+            }
+            ,
+            {
+              "name": "price",
+              "in": "query"
+            },
+            {
+              "name": "startTime",
+              "in": "query"
+            },
+            {
+              "name": "endTime",
+              "in": "query"
             }
           ],
           "produces": [
             "application/json"
           ],
-          "summary": "get all role",
+          "summary": "get all branches",
           "responses": {
             "200": {
               "description": "success"
@@ -404,19 +260,28 @@
         },
         "put": {
           "tags": [
-            "role"
+            "timeslots"
           ],
-          "description": "update role",
+          "description": "update branches",
           "parameters": [
             {
-              "name": "role id",
+              "name": "user id",
               "in": "body",
-              "description": "update role",
+              "description": "update branches",
               "properties": {
                 "id": {
+                  "type": "integer"
+                },
+                "name": {
                   "type": "string"
                 },
-                "role": {
+                "latitude": {
+                  "type": "string"
+                },
+                "longitude": {
+                  "type": "string"
+                },
+                "openingHours": {
                   "type": "string"
                 }
               }
@@ -425,7 +290,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "update role",
+          "summary": "update branch",
           "responses": {
             "200": {
               "description": "success"
@@ -434,17 +299,21 @@
         },
         "delete": {
           "tags": [
-            "role"
+            "timeslots"
           ],
-          "description": "delete role",
+          "description": "delete timeslots",
           "parameters": [
             {
-              "name": "role id",
+              "name": "timeslotID",
               "in": "body",
-              "description": "delete role",
+              "description": "delete timeslots",
               "properties": {
                 "id": {
-                  "type": "string"
+                  "type": "integer"
+                },
+                "isSafeDelete": {
+                  "type": "boolean",
+                  "default": true
                 }
               }
             }
@@ -452,7 +321,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "delete role",
+          "summary": "delete branch",
           "responses": {
             "200": {
               "description": "success"
@@ -460,22 +329,25 @@
           }
         }
       },
-      "/login": {
+      "/demands": {
         "post": {
           "tags": [
-            "login"
+            "demands"
           ],
-          "description": "login user",
+          "description": "set on-demand",
           "parameters": [
             {
-              "name": "user",
+              "name": "demands",
               "in": "body",
-              "description": "login user",
+              "description": "set on-demand",
               "properties": {
-                "password": {
-                  "type": "string"
+                "timeslotID": {
+                  "type": "integer"
                 },
-                "email": {
+                "price": {
+                  "type": "integer"
+                },
+                "alias": {
                   "type": "string"
                 }
               }
@@ -484,7 +356,34 @@
           "produces": [
             "application/json"
           ],
-          "summary": "login",
+          "summary": "set on-demand",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        },
+        "delete": {
+          "tags": [
+            "demands"
+          ],
+          "description": "set on-demand",
+          "parameters": [
+            {
+              "name": "set on-demand",
+              "in": "body",
+              "description": "deactive ondemands",
+              "properties": {
+                "timeslotID": {
+                  "type": "integer"
+                }
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "deactive ondemands",
           "responses": {
             "200": {
               "description": "success"
@@ -492,26 +391,23 @@
           }
         }
       },
-      "/auth/accesstoken": {
+      "/reservations": {
         "post": {
           "tags": [
-            "access_token"
+            "reservations"
           ],
-          "description": "Access Token",
+          "description": "add reservations",
           "parameters": [
             {
-              "name": "user",
+              "name": "demands",
               "in": "body",
-              "description": "Access Token",
+              "description": "set on-demand",
               "properties": {
-                "refresh_token": {
+                "timeslotID": {
+                  "type": "integer"
+                },
+                "name": {
                   "type": "string"
-                },
-                "email": {
-                  "type": "email"
-                },
-                "level": {
-                  "type": "email"
                 }
               }
             }
@@ -519,7 +415,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "get access token",
+          "summary": "reservations",
           "responses": {
             "200": {
               "description": "success"

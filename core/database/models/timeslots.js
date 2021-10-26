@@ -1,8 +1,8 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('timeslots', {
     id: {
       autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true
     },
@@ -11,15 +11,20 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     capacity: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+      type: DataTypes.INTEGER(11),
+      allowNull: false,
+      defaultValue: 15
+    },
+    booking: {
+      type: DataTypes.INTEGER(11),
+      defaultValue: 0
     },
     price: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
     day: {
-      type: DataTypes.STRING(25),
+      type: DataTypes.ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
       allowNull: false
     },
     startTime: {
@@ -36,7 +41,7 @@ module.exports = function(sequelize, DataTypes) {
       defaultValue: true
     },
     branchID: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(11),
       allowNull: false,
       references: {
         model: 'branches',
@@ -47,5 +52,5 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'timeslots',
     timestamps: true
-  });
+  })
 };

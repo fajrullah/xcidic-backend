@@ -1,18 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('demands', {
+  return sequelize.define('reservations', {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true
     },
-    alias: {
+    name: {
       type: DataTypes.STRING(45),
       allowNull: true
-    },
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull: false
     },
     timeslotID: {
       type: DataTypes.INTEGER(11),
@@ -22,15 +18,10 @@ module.exports = function(sequelize, DataTypes) {
         model: 'timeslots',
         key: 'id'
       }
-    },
-    isActive: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: true
     }
   }, {
     sequelize,
-    tableName: 'demands',
+    tableName: 'reservations',
     timestamps: true
   });
 };
