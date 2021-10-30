@@ -9,7 +9,7 @@
         "url": "https://opensource.org/licenses/MIT"
       }
     },
-    "host": "https://xcidic-deploys.herokuapp.com",
+    "host": "xcidic-deploys.herokuapp.com",
     "basePath": "/",
     "schemes": [
       "http"
@@ -37,10 +37,12 @@
                   "type": "string"
                 },
                 "latitude": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "-76.984722"
                 },
                 "longitude": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "39.807255"
                 },
                 "openingHours": {
                   "type": "string",
