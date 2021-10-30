@@ -2,7 +2,7 @@ module.exports = function (sequelize, DataTypes) {
   return sequelize.define('timeslots', {
     id: {
       autoIncrement: true,
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
@@ -11,12 +11,12 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
     capacity: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 15
     },
     booking: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       defaultValue: 0
     },
     price: {
@@ -41,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: true
     },
     branchID: {
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       allowNull: false,
       references: {
         model: 'branches',
