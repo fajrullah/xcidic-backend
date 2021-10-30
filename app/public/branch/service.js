@@ -26,9 +26,14 @@ class BranchService {
   }
 
   async updateBranch (data) {
-    const { id, ...rest } = data
+    const { id, longitude, latitude, ...rest } = data
     const set = {
       ...rest
+    }
+    if (longitude && latitude) {
+      set.coordinate = { type: 'Point', coordinates: [longitude, latitude] }
+      set.longitude = longitude
+      set.latitude = latitude
     }
     const options = {
       returning: true,

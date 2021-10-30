@@ -142,6 +142,7 @@ class TimeslotService {
     const condition = this.formatData(data)
     const condLatLong = this.formatDataLngLat(data)
     const objCondition = {
+      isActive: true,
       ...condition,
       ...condLatLong
     }

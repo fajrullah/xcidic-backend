@@ -112,13 +112,16 @@
                   "type": "string"
                 },
                 "latitude": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "-76.984722"
                 },
                 "longitude": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "39.807255"
                 },
                 "openingHours": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "00:00:00"
                 }
               }
             }
@@ -188,7 +191,9 @@
                   "default": 15
                 },
                 "day": {
-                  "type": "string"
+                  "type": "string",
+                  "default": "Monday",
+                  "description": "create a timeslots"
                 },
                 "price": {
                   "type": "integer"
@@ -253,7 +258,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "get all branches",
+          "summary": "get all timeslots",
           "responses": {
             "200": {
               "description": "success"
@@ -264,27 +269,41 @@
           "tags": [
             "timeslots"
           ],
-          "description": "update branches",
+          "description": "update timeslots",
           "parameters": [
             {
               "name": "user id",
               "in": "body",
-              "description": "update branches",
+              "description": "update timeslots",
               "properties": {
                 "id": {
                   "type": "integer"
                 },
-                "name": {
+                "branchID": {
+                  "type": "integer"
+                },
+                "mealPlanName": {
                   "type": "string"
                 },
-                "latitude": {
-                  "type": "string"
+                "capacity": {
+                  "type": "integer",
+                  "default": 15
                 },
-                "longitude": {
-                  "type": "string"
+                "day": {
+                  "type": "string",
+                  "default": "Monday",
+                  "description": "update"
                 },
-                "openingHours": {
-                  "type": "string"
+                "price": {
+                  "type": "integer"
+                },
+                "startTime": {
+                  "type": "string",
+                  "default": "00:00:00"
+                },
+                "endTime": {
+                  "type": "string",
+                  "default": "00:00:00"
                 }
               }
             }
@@ -292,7 +311,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "update branch",
+          "summary": "update timeslots",
           "responses": {
             "200": {
               "description": "success"
@@ -323,7 +342,7 @@
           "produces": [
             "application/json"
           ],
-          "summary": "delete branch",
+          "summary": "delete timeslots",
           "responses": {
             "200": {
               "description": "success"
