@@ -12,7 +12,7 @@
     "host": "xcidic-deploys.herokuapp.com",
     "basePath": "/",
     "schemes": [
-      "http"
+      "https"
     ],
     "consumes": [
       "application/json"
