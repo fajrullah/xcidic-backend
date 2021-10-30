@@ -2,7 +2,7 @@
  * Controller
  * controller for sending response to Client
  * No Logic Here
- * @author
+ * @author Fajrul
  */
 const { response } = require('../../../core')
 const Service = require('./service')

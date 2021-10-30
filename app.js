@@ -5,18 +5,9 @@ const cors = require('cors')
 const helmet = require('helmet')
 const swaggerUi = require('swagger-ui-express')
 const swaggerDocument = require('./swagger.json')
-const { publicRoute, protectedRoute, isEntityFalse, clientErrorHandler } = require('./core')
-const {
-  schemaCheck,
-  checkToken
-} = require('./core')
-const app = express()
-const ProtectedRoutes = express.Router()
+const { publicRoute, isEntityFalse, clientErrorHandler } = require('./core')
 
-/**
- * Database Connection
- */
-// require('./core/database')
+const app = express()
 
 /**
  * Security prevent using helmet
@@ -45,20 +36,8 @@ app.use(isEntityFalse)
  */
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-/**
- * All services Layer
- * Public : No Auth
- * Protect : Jwt Auth
- *
- * app.use('/public', PublicRoutes)
- * publicRoute(PublicRoutes)
- */
 publicRoute(app)
-// app.use('/api', [schemaCheck
-//   /** , apiLimiter */], ProtectedRoutes)
 
-// ProtectedRoutes.use(checkToken)
-// protectedRoute(ProtectedRoutes)
 app.use(clientErrorHandler)
 
 module.exports = app

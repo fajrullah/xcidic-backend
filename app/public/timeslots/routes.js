@@ -8,24 +8,32 @@
 const { isEntityFalse } = require('../../../core')
 const middleware = require('./middleware')
 const Controller = require('./controller')
+
+const INITIAL_ROUTES = {
+  timeslots: '/timeslots',
+  demands: '/demands',
+  reservations: '/reservations',
+  search: '/timeslots/search'
+}
+
 module.exports = (app) => {
   app
-    .route('/timeslots')
+    .route(INITIAL_ROUTES.timeslots)
     .get(Controller.getTimeslots)
     .post([middleware.createTimeslots, isEntityFalse], Controller.createTimeslots)
     .put([middleware.id, isEntityFalse], Controller.updateTimeslots)
     .delete([middleware.id, isEntityFalse], Controller.deleteTimeslots)
 
   app
-    .route('/demands')
+    .route(INITIAL_ROUTES.demands)
     .post([middleware.createDemands, isEntityFalse], Controller.createDemands)
     .delete([middleware.timeslotID, isEntityFalse], Controller.deactiveOnDemands)
 
   app
-    .route('/reservations')
+    .route(INITIAL_ROUTES.reservations)
     .post([middleware.timeslotID, isEntityFalse], Controller.createReservations)
 
   app
-    .route('/timeslots/search')
+    .route(INITIAL_ROUTES.search)
     .get(Controller.searchBranches)
 }

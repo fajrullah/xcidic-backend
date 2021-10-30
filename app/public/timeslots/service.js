@@ -91,7 +91,7 @@ class TimeslotService {
     }
   }
 
-  async searchBranches (data = {}) {
+  formatData (data) {
     const objCondition = {}
     Object.keys(data).forEach(key => {
       const value = data[key]
@@ -111,54 +111,41 @@ class TimeslotService {
         }
       }
 
-      if (key !== 'price' && key !== 'createdAt' && key !== 'longitude' && key !== 'latitude') {
+      const arrExclude = ['price', 'createdAt', 'longitude', 'latitude', 'km']
+
+      if (arrExclude.indexOf(key) < 0) {
         objCondition[key] = {
           [Op.like]: `%${value}%`
         }
       }
     })
-    const { longitude, latitude } = data
-    const location = Sequelize.literal(`ST_GeomFromText('POINT(${longitude} ${latitude})', 4326)`)
-    const distance = Sequelize.fn(
-      'ST_DistanceSphere',
-      Sequelize.literal('location::geometry'),
-      location
-    )
-    objCondition.options = {
-      // attributes: [[Sequelize.fn('ST_Distance', Sequelize.literal('geolocation'), location), 'distance']],
-      attributes: {
-        include: [
-          [
-            Sequelize.fn(
-              'ST_Distance',
-              Sequelize.col('cord'),
-              Sequelize.fn('ST_MakePoint', longitude, latitude)
-            ),
-            'distance'
-          ]
-        ]
-      },
-      order: Sequelize.literal('distance ASC')
-    }
+    return objCondition
+  }
 
-    objCondition.distance = Sequelize.where(
-      Sequelize.fn(
-        'ST_DWithin',
-        Sequelize.col('cord'),
-        Sequelize.fn('ST_MakePoint', longitude, latitude),
-        10000
-      ),
-      true
-    )
-    //   attributes: [[Sequelize.fn('ST_Distance_Sphere', Sequelize.literal('geolocation'), location),'distance']],
-    //   .findAll({
-    //     attributes: [[distance, 'distance']],
-    //     where: sequelize.where(distance, { [Op.lte]: 10 }),
-    //     order: [
-    //         [sequelize.literal('"distance"'), 'ASC'], // for smallest distance at top
-    //     ],
-    // })
-    const result = await Models.searchBranches(data)
+  formatDataLngLat (data) {
+    const objCondition = {}
+    const { longitude, latitude, km } = data
+
+    if (longitude && latitude && km) {
+      const location = Sequelize.literal(`ST_GeomFromText('POINT(${longitude} ${latitude})', 4326)`)
+      const distance = Sequelize.fn('ST_DistanceSphere', Sequelize.col('coordinate'), location)
+      objCondition.distance = distance
+      objCondition.distanceWhere = Sequelize.where(distance, { [Op.lte]: parseInt(km) * 1000 })
+      objCondition.attributes = {
+        include: [[distance, 'distance']]
+      }
+    }
+    return objCondition
+  }
+
+  async searchBranches (data = {}) {
+    const condition = this.formatData(data)
+    const condLatLong = this.formatDataLngLat(data)
+    const objCondition = {
+      ...condition,
+      ...condLatLong
+    }
+    const result = await Models.searchBranches(objCondition)
     return result
   }
 }

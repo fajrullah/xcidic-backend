@@ -8,9 +8,12 @@
 const { isEntityFalse } = require('../../../core')
 const middleware = require('./middleware')
 const Controller = require('./controller')
+const INITIAL_ROUTES = {
+  branches: '/branches'
+}
 module.exports = (app) => {
   app
-    .route('/branches')
+    .route(INITIAL_ROUTES.branches)
     .get(Controller.getBranches)
     .post([middleware.create, isEntityFalse], Controller.createBranches)
     .put([middleware.id, isEntityFalse], Controller.updateBranches)

@@ -422,6 +422,50 @@
             }
           }
         }
+      },
+      "/timeslots/search": {
+        "get": {
+          "tags": [
+            "search"
+          ],
+          "description": "search",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query"
+            },
+            {
+              "name": "price",
+              "in": "query"
+            },
+            {
+              "name": "createdAt",
+              "in": "query"
+            },
+            {
+              "name": "longitude",
+              "in": "query"
+            }
+            ,
+            {
+              "name": "latitude",
+              "in": "query"
+            },
+            {
+              "name": "km",
+              "in": "query"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "summary": "search",
+          "responses": {
+            "200": {
+              "description": "success"
+            }
+          }
+        }
       }
     }
 }

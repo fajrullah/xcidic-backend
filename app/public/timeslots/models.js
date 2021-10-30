@@ -6,7 +6,7 @@
  */
 
 // Call all models from core
-const { Timeslots, Demands, Reservations, Branches, Op, Sequelize } = require('../../../core')
+const { Timeslots, Demands, Reservations, Branches, Op } = require('../../../core')
 
 class TimeslotsModel {
   async findTimeslots (where) {
@@ -55,40 +55,38 @@ class TimeslotsModel {
   }
 
   async searchBranches (data) {
-    const { options, longitude, latitude, ...rest } = data
-    // const { attributes, order } = options
-    // // const result = await Branches.findAll({
-    // //   where: rest,
-    // //   attributes,
-    // //   include: [{
-    // //     as: 'branchesTimeslots',
-    // //     model: Timeslots,
-    // //     include: [{
-    // //       as: 'ondemands',
-    // //       model: Demands
-    // //     }]
-    // //   }],
-    // //   order: [
-    // //     order,
-    // //     // ['id', 'ASC'],
-    // //     // ['branchesTimeslots', 'startTime', 'ASC'],
-    // //     // ['branchesTimeslots', { model: Demands, as: 'ondemands' }, 'id', 'ASC']
-    // //   ]
-    // // })
+    const { distance, distanceWhere, attributes, ...where } = data
 
-    // // const distance = Sequelize.fn('ST_Distance',
-    // //   Sequelize.cast(Sequelize.fn('ST_SetSRID', Sequelize.fn('ST_MakePoint', longitude, latitude), 4326), 'geography'),
-    // //   Sequelize.cast(Sequelize.fn('ST_SetSRID', 'cord', 4326), 'geography'))
-    console.log(latitude, longitude)
+    const order = [
+      ['branchesTimeslots', 'startTime', 'ASC'],
+      ['branchesTimeslots', { model: Demands, as: 'ondemands' }, 'id', 'ASC']
+    ]
 
-    const location = Sequelize.literal(`ST_GeomFromText('POINT(${longitude} ${latitude})', 4326)`)
-    const distance = Sequelize.fn('ST_DistanceSphere', Sequelize.col('cord'), location)
+    if (distance) {
+      order.push(distance)
+    }
+
+    const options = {
+      order
+    }
+
+    if (attributes) {
+      options.attributes = attributes
+    }
+
     const result = await Branches.findAll({
-      attributes: {
-        include: [[distance, 'distance']]
+      include: [{
+        as: 'branchesTimeslots',
+        model: Timeslots,
+        include: [{
+          as: 'ondemands',
+          model: Demands
+        }]
+      }],
+      where: {
+        [Op.and]: [distanceWhere, where]
       },
-      where: Sequelize.where(distance, { [Op.lte]: 10 }),
-      order: distance
+      ...options
     })
     return result
   }
