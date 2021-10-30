@@ -12,7 +12,7 @@ module.exports = (app) => {
   app
     .route('/branches')
     .get(Controller.getBranches)
-    .post([middleware.name, isEntityFalse], Controller.createBranches)
+    .post([middleware.create, isEntityFalse], Controller.createBranches)
     .put([middleware.id, isEntityFalse], Controller.updateBranches)
     .delete([middleware.id, isEntityFalse], Controller.deleteBranches)
 }

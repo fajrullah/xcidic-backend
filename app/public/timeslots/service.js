@@ -3,7 +3,7 @@
  * @author Fajrul
  * All Logic defin HERE
  */
-const { Op, Sequelize } = require('../../../core')
+const { Op, Sequelize, moment } = require('../../../core')
 const Models = require('./models')
 class TimeslotService {
   async findTimeslots (data) {
@@ -102,19 +102,63 @@ class TimeslotService {
       }
 
       if (key === 'createdAt') {
+        const momentDate = moment.utc(value)
+        const startOfDay = momentDate.clone().startOf('day')
+        const endOfDay = momentDate.clone().endOf('day')
         objCondition.createdAt = {
-          [Op.gte]: value
+          [Op.gte]: startOfDay,
+          [Op.lt]: endOfDay
         }
       }
 
-      if (key !== 'price' || key !== 'createdAt') {
+      if (key !== 'price' && key !== 'createdAt' && key !== 'longitude' && key !== 'latitude') {
         objCondition[key] = {
           [Op.like]: `%${value}%`
         }
       }
     })
+    const { longitude, latitude } = data
+    const location = Sequelize.literal(`ST_GeomFromText('POINT(${longitude} ${latitude})', 4326)`)
+    const distance = Sequelize.fn(
+      'ST_DistanceSphere',
+      Sequelize.literal('location::geometry'),
+      location
+    )
+    objCondition.options = {
+      // attributes: [[Sequelize.fn('ST_Distance', Sequelize.literal('geolocation'), location), 'distance']],
+      attributes: {
+        include: [
+          [
+            Sequelize.fn(
+              'ST_Distance',
+              Sequelize.col('cord'),
+              Sequelize.fn('ST_MakePoint', longitude, latitude)
+            ),
+            'distance'
+          ]
+        ]
+      },
+      order: Sequelize.literal('distance ASC')
+    }
 
-    const result = await Models.searchBranches(objCondition)
+    objCondition.distance = Sequelize.where(
+      Sequelize.fn(
+        'ST_DWithin',
+        Sequelize.col('cord'),
+        Sequelize.fn('ST_MakePoint', longitude, latitude),
+        10000
+      ),
+      true
+    )
+    //   attributes: [[Sequelize.fn('ST_Distance_Sphere', Sequelize.literal('geolocation'), location),'distance']],
+    //   .findAll({
+    //     attributes: [[distance, 'distance']],
+    //     where: sequelize.where(distance, { [Op.lte]: 10 }),
+    //     order: [
+    //         [sequelize.literal('"distance"'), 'ASC'], // for smallest distance at top
+    //     ],
+    // })
+    const result = await Models.searchBranches(data)
     return result
   }
 }

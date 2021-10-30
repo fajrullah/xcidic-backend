@@ -6,7 +6,7 @@
  */
 
 // Call all models from core
-const { Timeslots, Demands, Reservations, Branches, Op } = require('../../../core')
+const { Timeslots, Demands, Reservations, Branches, Op, Sequelize } = require('../../../core')
 
 class TimeslotsModel {
   async findTimeslots (where) {
@@ -54,22 +54,41 @@ class TimeslotsModel {
     return result
   }
 
-  async searchBranches (where) {
+  async searchBranches (data) {
+    const { options, longitude, latitude, ...rest } = data
+    // const { attributes, order } = options
+    // // const result = await Branches.findAll({
+    // //   where: rest,
+    // //   attributes,
+    // //   include: [{
+    // //     as: 'branchesTimeslots',
+    // //     model: Timeslots,
+    // //     include: [{
+    // //       as: 'ondemands',
+    // //       model: Demands
+    // //     }]
+    // //   }],
+    // //   order: [
+    // //     order,
+    // //     // ['id', 'ASC'],
+    // //     // ['branchesTimeslots', 'startTime', 'ASC'],
+    // //     // ['branchesTimeslots', { model: Demands, as: 'ondemands' }, 'id', 'ASC']
+    // //   ]
+    // // })
+
+    // // const distance = Sequelize.fn('ST_Distance',
+    // //   Sequelize.cast(Sequelize.fn('ST_SetSRID', Sequelize.fn('ST_MakePoint', longitude, latitude), 4326), 'geography'),
+    // //   Sequelize.cast(Sequelize.fn('ST_SetSRID', 'cord', 4326), 'geography'))
+    console.log(latitude, longitude)
+
+    const location = Sequelize.literal(`ST_GeomFromText('POINT(${longitude} ${latitude})', 4326)`)
+    const distance = Sequelize.fn('ST_DistanceSphere', Sequelize.col('cord'), location)
     const result = await Branches.findAll({
-      where,
-      include: [{
-        as: 'branchesTimeslots',
-        model: Timeslots,
-        include: [{
-          as: 'ondemands',
-          model: Demands
-        }]
-      }],
-      order: [
-        ['id', 'ASC'],
-        ['branchesTimeslots', 'startTime', 'ASC'],
-        ['branchesTimeslots', { model: Demands, as: 'ondemands' }, 'id', 'ASC']
-      ]
+      attributes: {
+        include: [[distance, 'distance']]
+      },
+      where: Sequelize.where(distance, { [Op.lte]: 10 }),
+      order: distance
     })
     return result
   }

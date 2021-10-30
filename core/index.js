@@ -4,7 +4,7 @@
  */
 
 // const short = require('short-uuid')
-// const moment = require('moment')
+const moment = require('moment')
 // const bcrypt = require('bcryptjs')
 // const { v4: uuidv4 } = require('uuid')
 // /**
@@ -72,7 +72,7 @@ module.exports = {
   // upload,
   // bcrypt,
   // Sequelize,
-  // moment,
+  moment,
   // uuidv4,
   // // crypto,
   // /**

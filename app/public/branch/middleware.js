@@ -8,11 +8,11 @@ const id = [
   body('id').notEmpty().bail().withMessage('id is required')
 ]
 
-const name = [
+const create = [
   body('name').notEmpty().bail().withMessage('name is required')
 ]
 
 module.exports = {
   id,
-  name
+  create
 }

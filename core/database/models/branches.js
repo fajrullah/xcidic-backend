@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   return sequelize.define('branches', {
     id: {
       autoIncrement: true,
@@ -18,6 +18,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: false
     },
+    cord: {
+      type: DataTypes.GEOMETRY('POINT'),
+      allowNull: true
+    },
     openingHours: {
       type: DataTypes.TIME,
       allowNull: false
@@ -36,5 +40,5 @@ module.exports = function(sequelize, DataTypes) {
     sequelize,
     tableName: 'branches',
     timestamps: true
-  });
+  })
 };

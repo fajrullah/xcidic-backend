@@ -16,7 +16,12 @@ class BranchService {
   }
 
   async createBranch (data) {
-    const result = await Models.createBranch(data)
+    const { longitude, latitude } = data
+    const assignNew = data
+    if (longitude && latitude) {
+      assignNew.cord = { type: 'Point', coordinates: [longitude, latitude] }
+    }
+    const result = await Models.createBranch(assignNew)
     return result
   }
 
