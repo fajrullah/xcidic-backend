@@ -10,9 +10,11 @@ const { initModels } = require('./models/init-models')
 
 const sequelize = new Sequelize(config.db_url, {
   dialect: 'postgres',
-  ssl: true,
   dialectOptions: {
-    ssl: true
+    ssl: {
+      require: true,
+      rejectUnauthorized: false
+    }
   }
 })
 
